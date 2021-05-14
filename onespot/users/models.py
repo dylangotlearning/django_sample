@@ -194,7 +194,7 @@ class UserManager(BaseUserManager):
         """
         if (request.user.has_perm("user.can_delete_user") and 
             obj.id != request.user.id):
-            obj.delete()
+            obj.is_deleted=True
         else:
             raise PermissionError("You do not have permission to delete this user.")
 
