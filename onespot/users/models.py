@@ -145,8 +145,6 @@ class UserManager(BaseUserManager):
         else:
             raise PermissionError("You cannot retrieve users that way.")
 
-    
-
     def retrieve(self, request, id) -> QuerySet:
         """
         Retrieve a single user, if permitted.
@@ -157,7 +155,7 @@ class UserManager(BaseUserManager):
         """
 
         if request.user.has_perm("user.can_retrieve_all_users"):
-            return self.get_queryset().filter(pk=id)
+            return self.filter(pk=id)
         if request.user.has_perm("user.can_retrieve_users_in_school"):
             #TODO: implement this
             pass
@@ -173,7 +171,7 @@ class UserManager(BaseUserManager):
             id: id of object instance to retrieve
             kwargs: keyword arguments for model fields.
         """ 
-        obj = self.get_queryset().filter(id=id)
+        obj = self.filter(id=id)
         if obj is None:
             raise ObjectDoesNotExist
         
